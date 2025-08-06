@@ -10,10 +10,13 @@ public class MinionManager : MonoBehaviour
     public float returnDelay = 5f;
     public AudioClip commandSound;
     public AudioClip recallSound;
+    public AudioClip _ratsSound;
 
+    [SerializeField] private MinionController _minionController;
+    
     private AudioSource audioSource;
 
-    private List<MinionController> minions = new List<MinionController>();
+    private List<MinionControllerOld> minions = new List<MinionControllerOld>();
 
     void Start()
     {
@@ -23,6 +26,7 @@ public class MinionManager : MonoBehaviour
 
     void Update()
     {
+        /*
         if (Input.GetMouseButtonDown(1)) // Right click
         {
             Vector3 cameraForward = Camera.main.transform.forward;
@@ -61,6 +65,7 @@ public class MinionManager : MonoBehaviour
                 minion.SetStay(true);
             }
         }
+        */
     }
 
     void SpawnMinions()
@@ -70,9 +75,18 @@ public class MinionManager : MonoBehaviour
             Vector3 spawnPos = player.position + Random.insideUnitSphere * 2;
             spawnPos.y = player.position.y;
             GameObject minionObj = Instantiate(minionPrefab, spawnPos, Quaternion.identity);
-            var minion = minionObj.GetComponent<MinionController>();
-            minion.SetFollowTarget(player);
-            minions.Add(minion);
+            var minionController = minionObj.GetComponent<MinionControllerOld>();
+            minionController.SetFollowTarget(player);
+            minions.Add(minionController);
+            
+            Minion minion = minionObj.GetComponent<Minion>();
+            _minionController.AssignMinion(minion);
+        }
+        
+        int randomRange = Random.Range(0, 100);
+        if (randomRange <= 20)
+        {
+            audioSource.PlayOneShot(_ratsSound);
         }
     }
 }

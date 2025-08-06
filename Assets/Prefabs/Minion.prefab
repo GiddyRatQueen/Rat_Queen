@@ -40,8 +40,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1400790118878924114}
-  - component: {fileID: 959827115200583392}
+  - component: {fileID: 6951423459243381758}
   - component: {fileID: 2594250252901187754}
+  - component: {fileID: 959827115200583392}
   - component: {fileID: 6420695090539135042}
   m_Layer: 0
   m_Name: Minion
@@ -67,6 +68,39 @@ Transform:
   - {fileID: 5938615838759462744}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6951423459243381758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5964585234653617954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38b7b2fa70ad1cb41a46fdf3f7583f98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _owner: {fileID: 0}
+  _isCommanded: 0
+  _rotationSpeed: 5
+  _minDistanceToTarget: 1
+--- !u!114 &2594250252901187754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5964585234653617954}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c656bbb42b7b9f42849fab1595c028b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carrySocket: {fileID: 5938615838759462744}
+  carryDetectionRadius: 3
+  carryableLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!54 &959827115200583392
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -91,27 +125,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &2594250252901187754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5964585234653617954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c656bbb42b7b9f42849fab1595c028b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  carrySocket: {fileID: 5938615838759462744}
-  carryDetectionRadius: 3
-  carryableLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  isBusy: 0
 --- !u!195 &6420695090539135042
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -122,7 +138,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -130,7 +146,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.7
+  m_Height: 0.5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

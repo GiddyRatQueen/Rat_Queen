@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 
-public class MinionController : MonoBehaviour
+public class MinionControllerOld : MonoBehaviour
 {
     private NavMeshAgent agent;
     private Transform followTarget;

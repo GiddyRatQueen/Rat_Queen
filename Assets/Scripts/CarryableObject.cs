@@ -9,7 +9,7 @@ public class CarryableObject : MonoBehaviour
     public float moveSmoothness = 5f;
 
     private List<Transform> activeSockets = new List<Transform>();
-    private List<MinionController> registeredMinions = new List<MinionController>();
+    private List<MinionControllerOld> registeredMinions = new List<MinionControllerOld>();
 
     private bool isBeingCarried = false;
     private bool isClaimed = false;
@@ -36,7 +36,7 @@ public class CarryableObject : MonoBehaviour
         }
     }
 
-    public void RegisterMinion(MinionController minion)
+    public void RegisterMinion(MinionControllerOld minion)
     {
         if (isClaimed || isBeingCarried || registeredMinions.Contains(minion)) return;
 
@@ -50,7 +50,7 @@ public class CarryableObject : MonoBehaviour
         }
     }
 
-    private void AssignMinions(List<MinionController> minions)
+    private void AssignMinions(List<MinionControllerOld> minions)
     {
         activeSockets.Clear();
 
