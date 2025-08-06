@@ -13,6 +13,9 @@ public class MinionController : MonoBehaviour
     // List of controlled minions
     [SerializeField, ReadOnly] private List<Minion> _minions = new List<Minion>();
     [SerializeField] private Transform _commandPointIndicator;
+
+    [SerializeField] private float _followDistance;
+    private List<IMinionCommand> _issuedCommands = new List<IMinionCommand>();
     
     [Header("Formation Properties")] 
     [SerializeField] private FormationType _formationType = FormationType.Follow;
@@ -37,6 +40,12 @@ public class MinionController : MonoBehaviour
             _commandPointIndicator.position = commandPoint;
             
             CommandTo(commandPoint);
+            _audioSource.PlayOneShot(_whistleAudio);
+        }
+        
+        if (_issuedCommands.Count == 0)
+        {
+            ReturnMinions();
         }
     }
 
@@ -60,8 +69,9 @@ public class MinionController : MonoBehaviour
             
             IMinionCommand command = new MoveCommand(position + offset);
             minion.IssueCommand(command);
+            minion.OnCommandComplete += OnCommandComplete;
             
-            _audioSource.PlayOneShot(_whistleAudio);
+            _issuedCommands.Add(command);
         }
     }
 
@@ -71,7 +81,23 @@ public class MinionController : MonoBehaviour
 
     private void OnCommandComplete(Minion minion, IMinionCommand command)
     {
+        _issuedCommands.Remove(command);
+        
         minion.Agent.ResetPath();
+        minion.OnCommandComplete -= OnCommandComplete;
+    }
+
+    private void ReturnMinions()
+    {
+        Vector3 followPoint = transform.position - (transform.forward *  _followDistance);
+        
+        for (int i = 0; i < _minions.Count; i++)
+        {
+            Minion minion = _minions[i];
+            Vector3 offset = CalculateOffset(i, _minions.Count);
+            
+            minion.MoveTo(followPoint + offset);
+        }
     }
     
     /// <summary> Returns a point to command minions to based on the camera </summary>
@@ -125,6 +151,19 @@ public class MinionController : MonoBehaviour
         
         Debug.LogError($"Unable to find available minion at index {index}", this);
         return null;
+    }
+
+    private bool DoAnyMinionsHaveCommands()
+    {
+        foreach (Minion minion in _minions)
+        {
+            if (minion.CurrentCommand != null)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
     
     #endregion

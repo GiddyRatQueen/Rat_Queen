@@ -236,3 +236,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minions: []
+  _commandPointIndicator: {fileID: 0}
+  _followDistance: 4
+  _formationType: 0
+  _formationSpacing: 2
+  _whistleAudio: {fileID: 0}
+  _recallAudio: {fileID: 0}

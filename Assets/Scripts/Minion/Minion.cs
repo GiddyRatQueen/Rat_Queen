@@ -89,7 +89,7 @@ public class Minion : MonoBehaviour
         Agent.ResetPath();
         Agent.SetDestination(position);
         
-        Debug.Log($"Given Move To command at {position}");
+        //Debug.Log($"Given Move To command at {position}");
     }
 
     public void ReturnToOwner()
@@ -99,8 +99,6 @@ public class Minion : MonoBehaviour
             Debug.LogError("No Owner assigned", this);
             return;
         }
-        
-        
     }
 
     public void SetOwner(MinionController owner)
@@ -121,13 +119,6 @@ public class Minion : MonoBehaviour
     #endregion
     
     #region Private Methods
-
-    private void HandleCommandComplete(IMinionCommand command)
-    {
-        command.OnComplete -= HandleCommandComplete;
-        OnCommandComplete?.Invoke(this, command);
-        CurrentCommand = null;
-    }
     
     private void LookAtPoint(Vector3 point)
     {
@@ -139,6 +130,14 @@ public class Minion : MonoBehaviour
             Quaternion rotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _rotationSpeed * Time.deltaTime);
         }
+    }
+    
+    private void HandleCommandComplete(IMinionCommand command)
+    {
+        command.OnComplete -= HandleCommandComplete;
+        CurrentCommand = null;
+        
+        OnCommandComplete?.Invoke(this, command);
     }
     
     #endregion
