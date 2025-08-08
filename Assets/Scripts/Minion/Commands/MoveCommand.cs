@@ -16,6 +16,8 @@ public class MoveCommand : IMinionCommand
     
     public void Start(Minion minion)
     {
+        IsFinished = false;
+        
         _minion = minion;
         _minion.MoveTo(_destination);
     }

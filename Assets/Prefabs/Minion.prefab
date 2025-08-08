@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 6951423459243381758}
   - component: {fileID: 2594250252901187754}
   - component: {fileID: 959827115200583392}
+  - component: {fileID: 8339991057490240245}
   - component: {fileID: 6420695090539135042}
   m_Layer: 0
   m_Name: Minion
@@ -127,7 +128,28 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
+--- !u!65 &8339991057490240245
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5964585234653617954}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.58565664, y: 0.03585584, z: 1}
+  m_Center: {x: -0.007967949, y: -0.019920385, z: 0}
 --- !u!195 &6420695090539135042
 NavMeshAgent:
   m_ObjectHideFlags: 0

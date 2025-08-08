@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 13314275860569810}
   - component: {fileID: 9201624900302251012}
+  - component: {fileID: 276850689786622365}
   m_Layer: 0
   m_Name: CarrySocket
   m_TagString: Untagged
@@ -53,6 +54,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &276850689786622365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924116093260444177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ed51c6976bc642419a9f9885322acd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAvailable: 0
+  _minion: {fileID: 0}
 --- !u!1 &4272810455493052139
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,6 +82,7 @@ GameObject:
   - component: {fileID: 444142257986376853}
   - component: {fileID: 1579903541032748565}
   - component: {fileID: 756296808989643304}
+  - component: {fileID: 4686257857406265478}
   m_Layer: 6
   m_Name: Object
   m_TagString: Untagged
@@ -205,9 +221,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 633a83d03e8084847872d31825963cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredMinions: 3
-  carryDestination: {fileID: 0}
-  moveSmoothness: 5
+  _attachPoints:
+  - {fileID: 276850689786622365}
+  - {fileID: 3830087004883460428}
+  - {fileID: 2815319447377697337}
+--- !u!195 &4686257857406265478
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4272810455493052139}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7367672080763742882
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,6 +257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7117900094070193979}
   - component: {fileID: 4769563524746821471}
+  - component: {fileID: 2815319447377697337}
   m_Layer: 0
   m_Name: CarrySocket
   m_TagString: Untagged
@@ -261,6 +301,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2815319447377697337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7367672080763742882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ed51c6976bc642419a9f9885322acd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAvailable: 0
+  _minion: {fileID: 0}
 --- !u!1 &8629008737712831220
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,6 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5173675441049420487}
   - component: {fileID: 752247463518045301}
+  - component: {fileID: 3830087004883460428}
   m_Layer: 0
   m_Name: CarrySocket
   m_TagString: Untagged
@@ -314,3 +369,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3830087004883460428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8629008737712831220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ed51c6976bc642419a9f9885322acd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAvailable: 0
+  _minion: {fileID: 0}

@@ -87,11 +87,13 @@ void Update()
         foreach (var hit in hits)
         {
             CarryableObject carryable = hit.GetComponent<CarryableObject>();
+            /*
             if (carryable != null && !carryable.IsBeingCarried())
             {
                 carryable.RegisterMinion(this);
                 break;
             }
+            */
         }
     }
 

@@ -32,17 +32,28 @@ public class Minion : MonoBehaviour
         set { _isCommanded = value; }
     }
 
+    public CarryableObject CurrentCarryTarget 
+    {
+        get;
+        private set;
+    }
+
     public event Action<Minion, IMinionCommand> OnCommandComplete;
 
+    private Rigidbody _rigidbody;
+    
     [SerializeField, ReadOnly] private MinionController _owner;
     [SerializeField, ReadOnly] private bool _isCommanded;
 
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _minDistanceToTarget = 0.5f;
 
+    private AttachPoint _attachPoint;
+
     private void Awake()
     {
         Agent = GetComponent<NavMeshAgent>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -50,7 +61,7 @@ public class Minion : MonoBehaviour
         // If the minion has any queued commands
         if (CurrentCommand == null)
         {
-            LookAtPoint(Owner.transform.position);
+            //LookAtPoint(Owner.transform.position);
         }
         else
         {
@@ -73,7 +84,7 @@ public class Minion : MonoBehaviour
         CurrentCommand.OnComplete += HandleCommandComplete;
     }
 
-    public void ClearCommand()
+    public void ClearCommands()
     {
         if (CurrentCommand != null)
         {
@@ -82,14 +93,10 @@ public class Minion : MonoBehaviour
         }
     }
     
-    public void MoveTo(Vector3 position)
+    public void MoveTo(Vector3 destination)
     {
         IsCommanded = true;
-        
-        Agent.ResetPath();
-        Agent.SetDestination(position);
-        
-        //Debug.Log($"Given Move To command at {position}");
+        Agent.SetDestination(destination);
     }
 
     public void ReturnToOwner()
@@ -110,10 +117,36 @@ public class Minion : MonoBehaviour
     {
         return Owner != null;
     }
-    
+
     public bool HasReachedDestination()
     {
         return Agent.remainingDistance <= _minDistanceToTarget;
+    }
+    
+    public void SetCarryTarget(CarryableObject obj, AttachPoint attachPoint)
+    {
+        if (attachPoint == null)
+            return;
+        
+        CurrentCarryTarget = obj;
+        _attachPoint = attachPoint;
+        
+        Agent.ResetPath();
+        Agent.enabled = false;
+        _rigidbody.isKinematic = true;
+        transform.SetParent(attachPoint);
+    }
+
+    public void ReleaseCarry()
+    {
+        if (CurrentCarryTarget != null)
+        {
+            transform.SetParent(null, true);
+            Agent.enabled = true;
+
+            CurrentCarryTarget = null;
+            _attachPoint = null;
+        }
     }
     
     #endregion

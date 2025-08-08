@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,6 +17,9 @@ public class MinionController : MonoBehaviour
 
     [SerializeField] private float _followDistance;
     private List<IMinionCommand> _issuedCommands = new List<IMinionCommand>();
+
+    [SerializeField] private float _objectDetectionRadius = 1.0f;
+    private List<CarryableObject> _carriedObjects = new List<CarryableObject>();
     
     [Header("Formation Properties")] 
     [SerializeField] private FormationType _formationType = FormationType.Follow;
@@ -39,15 +43,35 @@ public class MinionController : MonoBehaviour
             Vector3 commandPoint = GetCommandPoint();
             _commandPointIndicator.position = commandPoint;
             
-            CommandTo(commandPoint);
+            // Check for any nearby objects to carry, telling minions to pick it up if there are any.
+            if (TryGetCarryableObject(commandPoint, _objectDetectionRadius, out CarryableObject obj))
+            {
+                CommandCarry(obj);
+                Debug.Log("Attempting to carry object");
+            }
+            else
+            {
+                MoveTo(commandPoint);
+            }
+            
             _audioSource.PlayOneShot(_whistleAudio);
         }
         
         if (_issuedCommands.Count == 0)
         {
-            ReturnMinions();
+           //ReturnMinions();
         }
     }
+    
+    #region Events
+
+    private void OnObjectCarried(CarryableObject obj)
+    {
+        obj.OnCarried -= OnObjectCarried;
+        obj.RegisterOwner(this);
+    }
+    
+    #endregion
 
     #region Public Methods
 
@@ -60,7 +84,7 @@ public class MinionController : MonoBehaviour
         }
     }
 
-    public void CommandTo(Vector3 position)
+    public void MoveTo(Vector3 position)
     {
         for (int i = 0; i < _minions.Count; i++)
         {
@@ -72,6 +96,21 @@ public class MinionController : MonoBehaviour
             minion.OnCommandComplete += OnCommandComplete;
             
             _issuedCommands.Add(command);
+        }
+    }
+
+    public void CommandCarry(CarryableObject obj)
+    {
+        // Bazinga
+        int needed = obj.NeededCarries;
+        List<Minion> carriers = _minions.OrderBy(minion => Vector3.Distance(minion.transform.position, obj.transform.position)).Take(needed).ToList();
+
+        foreach (Minion minion in carriers)
+        {
+            minion.ClearCommands();
+            minion.IssueCommand(new CarryCommand(obj));
+
+            obj.OnCarried += OnObjectCarried;
         }
     }
 
@@ -163,6 +202,25 @@ public class MinionController : MonoBehaviour
             }
         }
 
+        return false;
+    }
+
+    /// <summary>
+    /// Attempts to find a carryable object within a specific radius around a point.
+    /// </summary>
+    private bool TryGetCarryableObject(Vector3 point, float radius, out CarryableObject carryableObject)
+    {
+        Collider[] hits = Physics.OverlapSphere(point, radius, LayerMask.GetMask("Carryable"));
+        foreach (Collider collider in hits)
+        {
+            if (collider.TryGetComponent(out CarryableObject obj))
+            {
+                carryableObject = obj;
+                return true;
+            }
+        }
+
+        carryableObject = null;
         return false;
     }
     
